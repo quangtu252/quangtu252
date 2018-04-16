@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<conio.h>
+#include<io.h>
+#include<fcntl.h>
+#include<string.h>
+#include<stdlib.h>
+#include<wchar.h>
+
+struct SV {
+	wchar_t MSSV[10];
+	wchar_t Ten[30];
+	wchar_t Khoa[30];
+	int khoa;
+	wchar_t Ngaysinh[20];
+	wchar_t Hinhanh[30];
+	wchar_t Motabanthan[1000];
+	wchar_t Sothich[100][100];
+};
+
+void main()
+{
+	FILE* p = fopen("data.csv", "rt");
+
+}
