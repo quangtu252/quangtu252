@@ -16,7 +16,7 @@ struct SV {
 	wchar_t Motabanthan[1000];
 	wchar_t Sothich[100][100];
 };
-wchar_t* doc_1_tt(wchar_t *s, FILE* fp)
+wchar_t* copystring(wchar_t *s, FILE* fp)
 {
 	int i = 0;
 	wchar_t c = fgetwc(fp);
@@ -43,8 +43,44 @@ wchar_t* doc_1_tt(wchar_t *s, FILE* fp)
 	s[i] = L'\0';
 	return s;
 }
+int dem_sv(FILE* fp)
+{
+	wchar_t s[1600];
+	int dem = 0;
+	while (feof(fp) == NULL) {
+		fgetws(s, 1600, fp);
+		dem++;
+	}
+	return dem;
+}
+
+wint_t WSTRLEN(wchar_t *s)
+{
+	wint_t dem = 0;
+	while (s[dem] != L'\0')
+	{
+		dem++;
+	}
+	return dem;
+}
+wchar_t* ten_file(wchar_t *s1)
+{
+	wint_t a = WSTRLEN(s1);
+	wchar_t *s = new wchar_t[a + 5];
+	for (wint_t i = 0; i < a; i++)
+	{
+		s[i] = s1[i];
+	}
+	s[a] = L'.';
+	s[a + 1] = L'h';
+	s[a + 2] = L't';
+	s[a + 3] = L'm';
+	s[a + 4] = L'l';
+	s[a + 5] = L'\0';
+	return s;
+}
 void main()
 {
-	
+
 
 }
