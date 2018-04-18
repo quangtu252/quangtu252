@@ -10,10 +10,11 @@ struct SV {
 	wchar_t MSSV[10];
 	wchar_t Ten[30];
 	wchar_t Khoa[30];
-	int khoa;
+	wint_t khoa;
 	wchar_t Ngaysinh[20];
 	wchar_t Hinhanh[30];
 	wchar_t Motabanthan[1000];
+	wchar_t Email[100];
 	wchar_t Sothich[100][100];
 };
 wchar_t* copystring(wchar_t *s, FILE* fp)
@@ -22,7 +23,6 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 	wchar_t c = fgetwc(fp);
 	if (c == '"')
 	{
-		wprintf(L"1");
 		c = fgetwc(fp);
 		while (c != ',' && c != '"')
 		{
@@ -42,6 +42,20 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 	}
 	s[i] = L'\0';
 	return s;
+}
+void doc_1_sv(FILE* fp, SV& x)
+{
+	copystring(x.MSSV, fp);
+	copystring(x.Ten, fp);
+	copystring(x.Khoa, fp);
+	wchar_t s[10];
+	copystring(s, fp);
+
+	copystring(x.Ngaysinh, fp);
+	copystring(x.Hinhanh, fp);
+	copystring(x.Motabanthan, fp);
+	copystring(x.Email, fp);
+
 }
 int dem_sv(FILE* fp)
 {
