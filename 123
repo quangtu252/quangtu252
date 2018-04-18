@@ -1,16 +1,16 @@
 #include<stdio.h>
 #include<conio.h>
-#include<io.h>
-#include<fcntl.h>
-#include<string.h>
-#include<stdlib.h>
-#include<wchar.h>
+# include <io.h> 
+#include <fcntl.h> 
+#include <string.h> 
+#include <stdlib.h> 
+#include <wchar.h> 
 
 struct SV {
 	wchar_t MSSV[10];
 	wchar_t Ten[30];
 	wchar_t Khoa[30];
-	wint_t khoa;
+	int khoa;
 	wchar_t Ngaysinh[20];
 	wchar_t Hinhanh[30];
 	wchar_t Motabanthan[1000];
@@ -21,6 +21,10 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 {
 	int i = 0;
 	wchar_t c = fgetwc(fp);
+	while (c == ' ')
+	{
+		c = fgetwc(fp);
+	}
 	if (c == '"')
 	{
 		c = fgetwc(fp);
@@ -30,6 +34,7 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 			c = fgetwc(fp);
 			i++;
 		}
+		fseek(fp, 1L, SEEK_CUR);
 	}
 	else
 	{
@@ -48,9 +53,8 @@ void doc_1_sv(FILE* fp, SV& x)
 	copystring(x.MSSV, fp);
 	copystring(x.Ten, fp);
 	copystring(x.Khoa, fp);
-	wchar_t s[10];
-	copystring(s, fp);
-
+	fwscanf(fp, L"%d", &x.khoa);
+	fseek(fp, 1L, SEEK_CUR);
 	copystring(x.Ngaysinh, fp);
 	copystring(x.Hinhanh, fp);
 	copystring(x.Motabanthan, fp);
@@ -95,6 +99,28 @@ wchar_t* ten_file(wchar_t *s1)
 }
 void main()
 {
-
-
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	FILE *fp;
+	fp = _wfopen(L"data.csv", L" rt, ccs = UTF-8");
+	if (fp == NULL)
+		wprintf(L"Mo file csv that bai \n");
+	SV x;
+	copystring(x.MSSV, fp);
+	wprintf(L" %ls\n\n", x.MSSV);
+	copystring(x.Ten, fp);
+	wprintf(L" %ls\n\n", x.Ten);
+	copystring(x.Khoa, fp);
+	wprintf(L" %ls\n\n", x.Khoa);
+	fwscanf(fp, L"%d", &x.khoa);
+	wprintf(L" %d\n\n", x.khoa);
+	fseek(fp, 1L, SEEK_CUR);
+	copystring(x.Ngaysinh, fp);
+	wprintf(L" %ls\n\n", x.Ngaysinh);
+	copystring(x.Hinhanh, fp);
+	wprintf(L" %ls\n\n", x.Hinhanh);
+	copystring(x.Motabanthan, fp);
+	wprintf(L" %ls\n\n", x.Motabanthan);
+	copystring(x.Email, fp);
+	wprintf(L" %ls\n\n", x.Email);
 }
