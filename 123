@@ -16,9 +16,35 @@ struct SV {
 	wchar_t Motabanthan[1000];
 	wchar_t Sothich[100][100];
 };
-
+wchar_t* doc_1_tt(wchar_t *s, FILE* fp)
+{
+	int i = 0;
+	wchar_t c = fgetwc(fp);
+	if (c == '"')
+	{
+		wprintf(L"1");
+		c = fgetwc(fp);
+		while (c != ',' && c != '"')
+		{
+			s[i] = c;
+			c = fgetwc(fp);
+			i++;
+		}
+	}
+	else
+	{
+		while (c != ',' && c != '"')
+		{
+			s[i] = c;
+			c = fgetwc(fp);
+			i++;
+		}
+	}
+	s[i] = L'\0';
+	return s;
+}
 void main()
 {
-	FILE* p = fopen("data.csv", "rt");
+	
 
 }
