@@ -48,26 +48,6 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 	s[i] = L'\0';
 	return s;
 }
-wchar_t** copysothich(wchar_t s[100][1000], FILE* fp)
-{
-	int i = 0;
-	wchar_t c = fgetwc(fp);
-	while (c == ' ')
-	{
-		c = fgetwc(fp);
-	}
-	if (c == '"')
-	{
-		c = fgetwc(fp);
-		
-		fseek(fp, 1L, SEEK_CUR);
-	}
-	else
-	{
-		
-	}
-	return s;
-}
 void doc_1_sv(FILE* fp, SV& x)
 {
 	copystring(x.MSSV, fp);
@@ -88,7 +68,7 @@ void doc_1_sv(FILE* fp, SV& x)
 	copystring(x.Email, fp);
 	wprintf(L" %ls\n\n", x.Email);
 	fseek(fp, -1L, SEEK_CUR);
-	wchar_t s = fgetwc(fp);
+	wchar_t s = fgetwc(fp), t[100];
 	wint_t i = 0;
 	while (s != '\n')
 	{
@@ -154,9 +134,6 @@ void main()
 		wprintf(L"Mo file csv that bai \n");
 	SV x;
 	int n = dem_sv(fp);
-	fseek(fp, 0, 0);
-	wprintf(L" sinh viên %d\n",  1);
-	doc_1_sv(fp, x);
-	wprintf(L" sinh viên %d\n", 2);
-	doc_1_sv(fp, x);
+
+	doc_mang_sv(fp, x, n);
 }
