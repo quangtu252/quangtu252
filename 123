@@ -48,10 +48,40 @@ wchar_t* copystring(wchar_t *s, FILE* fp)
 	s[i] = L'\0';
 	return s;
 }
+wchar_t* copysothich(wchar_t *s, FILE* fp)
+{
+	int i = 0;
+	wchar_t c = fgetwc(fp);
+	while (c == ' ')
+	{
+		c = fgetwc(fp);
+	}
+	if (c == '"')
+	{
+		c = fgetwc(fp);
+		while (c != ',' && c != '"')
+		{
+			s[i] = c;
+			c = fgetwc(fp);
+			i++;
+		}
+	}
+	else
+	{
+		while (c != ',' && c != '"')
+		{
+			s[i] = c;
+			c = fgetwc(fp);
+			i++;
+		}
+	}
+	s[i] = L'\0';
+	return s;
+}
 void doc_1_sv(FILE* fp, SV& x)
 {
 	copystring(x.MSSV, fp);
-	wprintf(L" %ls\n\n", x.MSSV);
+	wprintf( L" %ls\n\n", x.MSSV);
 	copystring(x.Ten, fp);
 	wprintf(L" %ls\n\n", x.Ten);
 	copystring(x.Khoa, fp);
@@ -72,11 +102,14 @@ void doc_1_sv(FILE* fp, SV& x)
 	wint_t i = 0;
 	while (s != '\n')
 	{
-		copystring(x.Sothich[i], fp);
+		copysothich(x.Sothich[i], fp);
 		wprintf(L" %ls\n\n", x.Sothich[i]);
 		s = fgetwc(fp);
 		fseek(fp, -1L, SEEK_CUR);
+		if (s == '\0')
+			break;
 	}
+	fseek(fp, 1L, SEEK_CUR);
 }
 int dem_sv(FILE* fp)
 {
@@ -114,6 +147,10 @@ wchar_t* ten_file(wchar_t *s1)
 	s[a + 5] = L'\0';
 	return s;
 }
+void viet_1_sv_html(FILE* fo, SV x)
+{
+	
+}
 void doc_mang_sv(FILE* fp, SV x, int n)
 {
 	fseek(fp, 0, 0);
@@ -121,8 +158,13 @@ void doc_mang_sv(FILE* fp, SV x, int n)
 	{
 		wprintf(L" sinh viên %d\n", i + 1);
 		doc_1_sv(fp, x);
+		FILE *fo;
+		wchar_t *s = ten_file(x.MSSV);
+		fo = _wfopen(s, L" wt, ccs = UTF-8");
+		if (fo == NULL)
+			wprintf(L"Mo file %ls that bai\n", s);
+		viet_1_sv_html(fo, x);
 	}
-
 }
 void main()
 {
@@ -134,6 +176,6 @@ void main()
 		wprintf(L"Mo file csv that bai \n");
 	SV x;
 	int n = dem_sv(fp);
-
 	doc_mang_sv(fp, x, n);
+	fclose(fp);
 }
