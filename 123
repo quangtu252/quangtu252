@@ -304,3 +304,4 @@ void main()
 	doc_mang_sv(fp, x, n);
 	fclose(fp);
 }
+
