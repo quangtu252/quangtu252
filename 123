@@ -99,7 +99,7 @@ void copysothich(wchar_t* s, wchar_t sothich[100][1000], int &k)
 		}
 	}
 }
-void doc_1_sv(FILE* fp, SV& x, int &k)
+void ghi_struct(FILE* fp, SV& x, int &k)
 {
 	copystring(x.MSSV, fp);
 	wprintf(L" %ls\n\n", x.MSSV);
@@ -282,7 +282,7 @@ void ghifile_HTML(FILE* fp, SV x, int n)
 	{
 		int k;
 		wprintf(L" sinh viên %d\n", i + 1);
-		doc_1_sv(fp, x, k);
+		ghi_struct(fp, x, k);
 		FILE *fo;
 		wchar_t *s = Tenfile(x.MSSV);
 		fo = _wfopen(s, L" wt, ccs = UTF-8");
