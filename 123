@@ -128,12 +128,12 @@ void doc_1_sv(FILE* fp, SV& x, int &k)
 		wprintf(L" %ls\n\n", x.Sothich[i]);
 	}
 }
-int dem_sv(FILE* fp)
+int So_luong_SV(FILE* fp)
 {
-	wchar_t s[1600];
+	wchar_t s[2000];
 	int dem = 0;
 	while (feof(fp) == NULL) {
-		fgetws(s, 1600, fp);
+		fgetws(s, 2000, fp);
 		dem++;
 	}
 	return dem;
@@ -148,7 +148,7 @@ wint_t WSTRLEN(wchar_t *s)
 	}
 	return dem;
 }
-wchar_t* ten_file(wchar_t *s1)
+wchar_t* Tenfile(wchar_t *s1)
 {
 	wint_t a = WSTRLEN(s1);
 	wchar_t *s = new wchar_t[a + 5];
@@ -164,7 +164,7 @@ wchar_t* ten_file(wchar_t *s1)
 	s[a + 5] = L'\0';
 	return s;
 }
-void viet_1_sv_html(FILE* fo, SV x, int k)
+void viet_1_file_html(FILE* fo, SV x, int k)
 
 {
 	fwprintf(fo, L"<!DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
@@ -275,7 +275,7 @@ void viet_1_sv_html(FILE* fo, SV x, int k)
 	fwprintf(fo, L"</html>\n");
 	fclose(fo);
 }
-void doc_mang_sv(FILE* fp, SV x, int n)
+void ghifile_HTML(FILE* fp, SV x, int n)
 {
 	fseek(fp, 0, 0);
 	for (int i = 0; i < n; i++)
@@ -284,11 +284,11 @@ void doc_mang_sv(FILE* fp, SV x, int n)
 		wprintf(L" sinh viên %d\n", i + 1);
 		doc_1_sv(fp, x, k);
 		FILE *fo;
-		wchar_t *s = ten_file(x.MSSV);
+		wchar_t *s = Tenfile(x.MSSV);
 		fo = _wfopen(s, L" wt, ccs = UTF-8");
 		if (fo == NULL)
 			wprintf(L"Mo file %ls that bai\n", s);
-		viet_1_sv_html(fo, x, k);
+		viet_1_file_html(fo, x, k);
 	}
 }
 void main()
@@ -300,8 +300,7 @@ void main()
 	if (fp == NULL)
 		wprintf(L"Mo file csv that bai \n");
 	SV x;
-	int n = dem_sv(fp);
-	doc_mang_sv(fp, x, n);
+	int n = So_luong_SV(fp);
+	ghifile_HTML(fp, x, n);
 	fclose(fp);
 }
-
